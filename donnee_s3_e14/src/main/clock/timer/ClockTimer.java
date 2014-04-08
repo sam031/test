@@ -79,8 +79,8 @@ public class ClockTimer extends Observable implements Runnable {
                 time = System.currentTimeMillis();
                 calendar.setTimeInMillis(time);
                 // TODO Notify observers here, instead of setting the time direcly.
-				// Program against the observer interface, instead of programming against the analog clock class!
-				analogClock.update(getHour(), getMinute(), getSecond());
+                // Program against the observer interface, instead of programming against the analog clock class!
+		analogClock.update(getHour(), getMinute(), getSecond());
                 Thread.sleep(delay);
             } catch (InterruptedException e) {
             	loggingService.severe("Timer got interrupted");
