@@ -14,7 +14,7 @@ public class ClockApp {
      * Creates a new instance of <code>ClockApp</code>.
      */
     public ClockApp() {
-		ClockTimer timer = new ClockTimer(new AnalogClock());
+		ClockTimer timer = new ClockTimer();
 		timer.start();
     }
     

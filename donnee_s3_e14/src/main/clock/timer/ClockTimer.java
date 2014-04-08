@@ -36,12 +36,18 @@ public class ClockTimer implements Runnable {
     /**
      * Creates a new instance of <code>ClockTimer</code>.
      */
-    public ClockTimer(AnalogClock analogClock) {
+/*    public ClockTimer(AnalogClock analogClock) {
 		// TODO Remove the analog clock argument from the constructor, once the observer pattern is used.
 		this.analogClock = analogClock;
         calendar = new GregorianCalendar();
     }
-
+*/
+        
+    public ClockTimer() {
+	// TODO Remove the analog clock argument from the constructor, once the observer pattern is used.	
+        calendar = new GregorianCalendar();
+    }
+        
     /**
      * Returns the current hour.
      */
