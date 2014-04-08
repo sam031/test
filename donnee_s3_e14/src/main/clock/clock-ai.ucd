@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="clock-ai" size="954,388" id="clock" metadata="uml2-1.0" initialized="true" scrolledX="195" scrolledY="34" tag="5" key="323030353039323720636C6F636B5F646F6E6E65">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.0" name="AnalogClock" location="490,50" size="166,79" id="clock.analog/AnalogClock" runTimeClassModel="AnalogClock(),update(III)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="91,32">
+      <children xsi:type="editmodel:MethodEditModel" name="AnalogClock" id="clock.analog/AnalogClock#AnalogClock()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="update" id="clock.analog/AnalogClock#update(III)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="clock.analog/AnalogClockPanel@analogClockPanel+clock.analog/AnalogClock@" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.0/@children.2" label="//@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="82,79" id="clock.analog/AnalogClockPanel@analogClockPanel+clock.analog/AnalogClock@|clock.analog/AnalogClock#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="analogClockPanel" location="92,0" id="clock.analog/AnalogClockPanel@analogClockPanel+clock.analog/AnalogClock@|clock.analog/AnalogClockPanel#analogClockPanel" multiplicityLabel="//@children.0/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.0/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - analogClockPanel" location="579,219" size="109,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="558,219" size="7,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="clock.analog/AnalogClock->clock.util/PositionManager" source="//@children.0" target="//@children.4" targetEnd="//@children.0/@sourceConnections.1/@children.2" label="//@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«access»" size="54,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="166,39" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,39"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ClockTimer" location="215,50" size="143,159" id="clock.timer/ClockTimer" runTimeClassModel="stop(),ClockTimer(Lclock.analog.AnalogClock;),start(),run()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="86,112">
+      <children xsi:type="editmodel:MethodEditModel" name="ClockTimer" id="clock.timer/ClockTimer#ClockTimer(Lclock.analog.AnalogClock;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getHour" id="clock.timer/ClockTimer#getHour()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMinute" id="clock.timer/ClockTimer#getMinute()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSecond" id="clock.timer/ClockTimer#getSecond()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="run" id="clock.timer/ClockTimer#run()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="start" id="clock.timer/ClockTimer#start()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stop" id="clock.timer/ClockTimer#stop()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="clock.analog/AnalogClock@analogClock+clock.timer/ClockTimer@" source="//@children.1" target="//@children.0" targetEnd="//@children.1/@sourceConnections.0/@children.2" label="//@children.1/@sourceConnections.0/@children.0" sourceEnd="//@children.1/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="143,39" id="clock.analog/AnalogClock@analogClock+clock.timer/ClockTimer@|clock.timer/ClockTimer#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="analogClock" location="0,39" id="clock.analog/AnalogClock@analogClock+clock.timer/ClockTimer@|clock.analog/AnalogClock#analogClock" multiplicityLabel="//@children.1/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.1/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" ~ analogClock" location="400,68" size="83,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="476,96" size="7,14" fontInfo="Arial-8-0" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0" name="AnalogClockPanel" location="480,240" size="207,127" id="clock.analog/AnalogClockPanel" runTimeClassModel="hour,AnalogClockPanel(),minute,setTime(III),second">
+    <children xsi:type="editmodel:CompartmentEditModel" size="69,48">
+      <children xsi:type="editmodel:AttributeEditModel" name="hour" id="clock.analog/AnalogClockPanel#hour"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="minute" id="clock.analog/AnalogClockPanel#minute"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="second" id="clock.analog/AnalogClockPanel#second"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,32">
+      <children xsi:type="editmodel:MethodEditModel" name="AnalogClockPanel" id="clock.analog/AnalogClockPanel#AnalogClockPanel()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setTime" id="clock.analog/AnalogClockPanel#setTime(III)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ClockApp" location="20,50" size="94,79" id="clock/ClockApp" runTimeClassModel="main([Ljava.lang.String;),ClockApp()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="74,32">
+      <children xsi:type="editmodel:MethodEditModel" name="ClockApp" id="clock/ClockApp#ClockApp()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="main" id="clock/ClockApp#main([Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.1" name="PositionManager" location="756,50" size="178,95" id="clock.util/PositionManager" runTimeClassModel="getInstance(),getClockWindowPosition(),mainWindowPosition">
+    <children xsi:type="editmodel:CompartmentEditModel" size="157,16">
+      <children xsi:type="editmodel:AttributeEditModel" name="mainWindowPosition" id="clock.util/PositionManager#mainWindowPosition"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="158,32">
+      <children xsi:type="editmodel:MethodEditModel" name="getClockWindowPosition" id="clock.util/PositionManager#getClockWindowPosition()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInstance" id="clock.util/PositionManager#getInstance()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="All" properties="wireOptions=3"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="10,10" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

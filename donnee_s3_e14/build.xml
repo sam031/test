@@ -1,0 +1,483 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== -->
+<!-- Build file for - Software Engineering I                                -->
+<!-- ====================================================================== -->
+<project name="Clock" default="run" basedir=".">
+  <!-- group-specific properties -->
+  <property file="group.properties" />
+  <!-- build-specific properties -->
+  <property file="build.properties" />
+  <!-- set global properties for this build -->
+  <property name="src.dir" value="src" />
+  <path id="j2l.include.path">
+    <dirset dir="${src.dir}/main/clock" />
+  </path>
+  <property name="src_main.dir" value="${src.dir}/main" />
+  <property name="src_junittest.dir" value="${src.dir}/junittest" />
+  <property name="build.dir" value="bin" />
+  <property name="build_main.dir" value="${build.dir}/classes" />
+  <property name="build_junittest.dir" value="${build.dir}/junittest-classes" />
+  <property name="build_instrumented.dir" value="${build.dir}/instrumented-classes" />
+  <property name="dist.dir" location="dist" />
+  <property name="lib.dir" location="lib" />
+  <!-- for code documentation -->
+  <property name="doc.dir" value="doc" />
+  <property name="javadoc.dir" value="${doc.dir}/javadoc" />
+  <property name="sourcedoc.dir" value="${doc.dir}/source" />
+  <property name="browsable-source.dir" value="${sourcedoc.dir}/html" />
+  <!-- for code reviewing reports -->
+  <property name="reports.dir" value="reports" />
+  <property name="checkstyle_report.dir" value="${reports.dir}/checkstyle" />
+  <property name="javadoc_check.dir" value="${reports.dir}/doccheck" />
+  <property name="junit_report.dir" value="${reports.dir}/junit" />
+  <property name="cobertura_report.dir" value="${reports.dir}/cobertura_junit" />
+  <!-- java compiler properties -->
+  <property name="javac.debug" value="true" />
+  <property name="javac.deprecation" value="on" />
+  <!-- properties for below task defs -->
+  <property name="ltx.doPDF" value="on" />
+  <property name="ltx.doTEXCLEAN" value="on" />
+  <property name="ltx.reRunPattern" value="There were undefined references" />
+  <property name="ltx2.bib.terse" value="false" />
+  <property name="ltx2.bib.minCrossrefs" value="1" />
+  <property name="compilationpath" value="./" />
+  <property name="tmp.srclisting.file" value="${tmp.dir}/src.tex" />
+  <property name="tmp.srclisting.cover.file" value="${tmp.dir}/src_cover.tex" />
+  <property name="tmp.conversion.file" value="${tmp.dir}/conversion.txt" />
+  <!-- base path for j2l -->
+  <property name="j2l.base.path" value="${basedir}/${src.dir}/main" />
+  <property name="j2l.logos.path" value="${ant.libs.dir}/images" />
+  <property name="s2l.style" value="${ant.libs.dir}/code_formatter" />
+  <!-- =================================================================== -->
+  <!-- Task Defs                                                           -->
+  <!-- =================================================================== -->
+  <taskdef name="latex" classname="de.dokutransdata.antlatex.LaTeX">
+    <classpath>
+      <pathelement location="${ant.libs.dir}/ant_latex/ant_latex_0.0.7.jar" />
+    </classpath>
+  </taskdef>
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="${ant.libs.dir}/ant_contrib/ant-contrib-1.0b3.jar" />
+    </classpath>
+  </taskdef>
+  <taskdef name="bibtex" classname="de.dokutransdata.antlatex.BibTeXTask">
+    <classpath>
+      <pathelement location="${ant.libs.dir}/ant_latex/ant_latex_0.0.7.jar" />
+    </classpath>
+  </taskdef>
+  <!-- =================================================================== -->
+  <!-- Class paths                                                         -->
+  <!-- =================================================================== -->
+  <path id="compile.class.path">
+    <pathelement location="${junit.jar}" />
+    <pathelement location="${build_main.dir}" />
+    <pathelement location="${lib.dir}/softenglog.jar" />
+  </path>
+  <path id="run.class.path">
+    <pathelement location="${build_main.dir}" />
+    <pathelement location="${junit.jar}" />
+    <pathelement location="${lib.dir}/softenglog.jar" />
+  </path>
+  <path id="javadoc.src.path">
+    <pathelement location="${src_main.dir}" />
+  </path>
+  <path id="classpath.junittest">
+    <pathelement location="${junit.jar}" />
+    <pathelement location="${build_main.dir}" />
+    <pathelement location="${build_junittest.dir}" />
+  </path>
+  <!-- =================================================================== -->
+  <!-- Init targets                                                        -->
+  <!-- =================================================================== -->
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp />
+    <property name="now" value="${DSTAMP}-${TSTAMP}" />
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.dir}" />
+    <!-- Create the build directory structure used for dist files -->
+    <mkdir dir="${dist.dir}" />
+  </target>
+  <!-- =================================================================== -->
+  <!-- Splash screen                                                       -->
+  <!-- =================================================================== -->
+  <target name="splash">
+    <!--splash imageurl="file://${ant.libs.dir}/images/superbigsofteng.jpg" showduration="4" /-->
+  </target>
+  <!-- =================================================================== -->
+  <!-- Compile: Default                                                    -->
+  <!-- =================================================================== -->
+  <target name="compile" depends="splash, init" description="Compiles all Java sources">
+    <mkdir dir="${build_main.dir}" />
+    <mkdir dir="${build_junittest.dir}" />
+    <javac includeantruntime="false" destdir="${build_main.dir}" classpathref="compile.class.path"
+    deprecation="${javac.deprecation}" debug="${javac.debug}">
+      <src path="${src_main.dir}" />
+      <include name="**/*.java" />
+    </javac>
+    <javac includeantruntime="false" destdir="${build_junittest.dir}"
+    classpathref="compile.class.path" deprecation="${javac.deprecation}" debug="${javac.debug}">
+      <src path="${src_junittest.dir}" />
+      <include name="**/*.java" />
+    </javac>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Run targets                                                         -->
+  <!-- =================================================================== -->
+  <target name="run" depends="compile" description="Runs the program">
+    <java classname="${main.class}" fork="yes" classpathref="run.class.path">
+      <jvmarg value="-Djava.util.logging.config.file=logging.properties" />
+    </java>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Debug                                                         -->
+  <!-- =================================================================== -->
+  <target name="debug" depends="compile" if="netbeans.home" description="Debugs the Project">
+    <nbjpdastart name="${project.name}" addressproperty="jpda.address" transport="dt_socket">
+      <classpath refid="run.class.path" />
+      <sourcepath path="${src_main.dir}" />
+      <!-- Optional - If source roots are properly declared in project, should work without setting source path. <sourcepath refid="debug.sourcepath"/> -->
+    </nbjpdastart>
+    <java fork="true" classname="${main.class}">
+      <jvmarg value="-Xdebug" />
+      <jvmarg value="-Xnoagent" />
+      <jvmarg value="-Djava.compiler=none" />
+      <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}" />
+      <classpath refid="run.class.path" />
+    </java>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Unit testing: Runs all JUnit tests                                  -->
+  <!-- =================================================================== -->
+  <!-- <target name="test" depends="init, compile" description="Runs all JUnit unit tests.">
+                <echo message="${src_junittest.dir}" />
+                <junit fork="yes" printsummary="yes" haltonfailure="no">
+                        <classpath refid="classpath.junittest" />
+                        <batchtest>
+                                <formatter type="brief" usefile="no" />
+                                <fileset dir="${src_junittest.dir}">
+                                        <include name="**/*.java" />
+                                </fileset>
+                        </batchtest>
+                </junit>
+        </target> -->
+  <!-- A mix between the old test target inspired by http://junit.netbeans.org/doc/binding-freeform-to-output.html -->
+  <target name="test" depends="init, compile" description="Runs all JUnit unit tests.">
+    <echo message="${src_junittest.dir}" />
+    <delete dir="${junit_report.dir}" />
+    <mkdir dir="${junit_report.dir}/xml" />
+    <junit showoutput="true" fork="true" failureproperty="tests.failed"
+    errorproperty="tests.failed" printsummary="yes" haltonfailure="no">
+      <classpath refid="classpath.junittest" />
+      <batchtest todir="${junit_report.dir}/xml">
+        <!--<formatter type="brief" usefile="no" />-->
+        <formatter type="xml" usefile="yes" />
+        <fileset dir="${src_junittest.dir}">
+          <include name="**/*.java" />
+        </fileset>
+      </batchtest>
+      <classpath path="${classes.dir}:${junit.jar}:${test.classes.dir}" />
+      <formatter usefile="false" type="brief" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+  <!-- ========================================================================== -->
+  <!-- Unit testing: Generates an HTML and a PDF report of the JUnit test results -->
+  <!-- ========================================================================== -->
+  <import file="${junitpdfreport_task.dir}/build-junitpdfreport.xml" />
+  <target name="testreport" depends="test"
+  description="Generates a PDF and a HTML report with the unit tests results.">
+    <!--<delete dir="${junit_report.dir}" />        
+           <mkdir dir="${junit_report.dir}/xml" />-->
+    <mkdir dir="${junit_report.dir}/pdf" />
+    <mkdir dir="${junit_report.dir}/html" />
+    <!--<junit fork="yes" printsummary="yes" haltonfailure="no">
+              <classpath refid="classpath.junittest" />-->
+    <!-- XML files output. -->
+    <!--<batchtest fork="yes" todir="${junit_report.dir}/xml">
+                <formatter type="xml" usefile="yes" />
+                <fileset dir="${src_junittest.dir}">
+                   <include name="**/*.java"/>
+                </fileset>
+              </batchtest>
+           </junit> 
+           -->
+    <!-- Generating the HTML report -->
+    <junitreport todir="${junit_report.dir}/html">
+      <fileset dir="${junit_report.dir}/xml">
+        <include name="TEST-*.xml" />
+      </fileset>
+      <report todir="${junit_report.dir}/html" />
+    </junitreport>
+    <!-- Generating the PDF report -->
+    <!-- possible output styles for the PDF report are: default, brief, structural and graphical -->
+    <junitpdfreport todir="${junit_report.dir}/pdf" styledir="default">
+      <fileset dir="${junit_report.dir}/xml">
+        <include name="TEST-*.xml" />
+      </fileset>
+    </junitpdfreport>
+    <delete dir="${junit_report.dir}/xml" />
+    <delete>
+      <fileset dir="${junit_report.dir}" includes="**/*.xml" />
+    </delete>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Unit testing: Measuring JUnit test coverage with Cobertura          -->
+  <!-- =================================================================== -->
+  <target name="instrument" depends="compile">
+    <taskdef resource="tasks.properties">
+      <classpath>
+        <pathelement location="${cobertura_task.dir}/cobertura.jar" />
+        <pathelement location="${cobertura_task.dir}/lib/log4j-1.2.9.jar" />
+        <pathelement location="${cobertura_task.dir}/lib/asm-3.0.jar" />
+        <pathelement location="${cobertura_task.dir}/lib/jakarta-oro-2.0.8.jar" />
+      </classpath>
+    </taskdef>
+    <cobertura-instrument todir="${build_instrumented.dir}">
+      <fileset dir="${build_main.dir}">
+        <include name="**/*.class" />
+      </fileset>
+    </cobertura-instrument>
+  </target>
+  <!-- <target name="cover-test" depends="instrument">
+           <mkdir dir="${cobertura_report.dir}" />
+           <junit failureproperty="test.failure" printSummary="no" 
+                  dir="./" fork="true" haltonerror="true">
+              <classpath location="${cobertura_task.dir}/cobertura.jar"/>
+              <classpath location="${build_instrumented.dir}"/>
+              <classpath refid="classpath.junittest" />
+              <batchtest todir="${cobertura_report.dir}">
+                 <fileset dir="${src_junittest.dir}">
+                    <include name="**/*.java"/>
+                 </fileset>
+              </batchtest>
+           </junit>
+        </target> -->
+  <target name="cover-test" depends="instrument, init, compile">
+    <echo message="${src_junittest.dir}" />
+    <delete dir="${junit_report.dir}" />
+    <mkdir dir="${junit_report.dir}/xml" />
+    <mkdir dir="${cobertura_report.dir}" />
+    <junit failureproperty="test.failure" printSummary="yes" dir="./" fork="true" haltonerror="no"
+    showoutput="true" errorproperty="tests.failed">
+      <classpath location="${cobertura_task.dir}/cobertura.jar" />
+      <classpath location="${build_instrumented.dir}" />
+      <classpath refid="classpath.junittest" />
+      <batchtest todir="${cobertura_report.dir}">
+        <fileset dir="${src_junittest.dir}">
+          <include name="**/*.java" />
+        </fileset>
+      </batchtest>
+      <classpath path="${classes.dir}:${junit.jar}:${test.classes.dir}" />
+      <formatter usefile="false" type="brief" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+  <target name="coverage-report" depends="cover-test"
+  description="Generates a browsable HTML test coverage report.">
+    <cobertura-report srcdir="${src_main.dir}" destdir="${cobertura_report.dir}" />
+    <delete file="cobertura.ser" />
+  </target>
+  <!-- =================================================================== -->
+  <!-- Documentation                                                       -->
+  <!-- =================================================================== -->
+  <target name="javadoc" depends="splash, init" description="Generate JavaDoc HTML pages">
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc packagenames="${javadoc.packagenames}" sourcepathref="javadoc.src.path"
+    classpathref="compile.class.path" destdir="${javadoc.dir}" author="true" version="false"
+    use="true" verbose="false" package="true" windowtitle="${javadoc.windowtitle}"
+    splitindex="true">
+      <link href="http://docs.oracle.com/javase/7/docs/api/" />
+      <link href="http://kentbeck.github.com/junit/javadoc/latest/" />
+    </javadoc>
+  </target>
+  <!-- =================================================================== -->
+  <!-- DocCheck: Check and Review the javadoc                              -->
+  <!-- =================================================================== -->
+  <target name="doccheck" description="Review documentation comments.">
+    <mkdir dir="${javadoc_check.dir}" />
+    <javadoc docletpath="${doclets.dir}/doccheck1.2b2/doccheck.jar"
+    doclet="com.sun.tools.doclets.doccheck.DocCheck" sourcepath="${src_main.dir}"
+    destdir="${javadoc_check.dir}" access="protected"
+    additionalparam="-docletID -title '${project.name}'">
+      <packageset dir="${src_main.dir}" />
+    </javadoc>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Java2HTML: Generating browsable (HTML) source code                  -->
+  <!-- =================================================================== -->
+  <target name="java2html" description="Generates browsable HTML version of the source code.">
+    <mkdir dir="${browsable-source.dir}" />
+    <taskdef name="java2html" classname="de.java2html.anttasks.Java2HtmlTask"
+    classpath="${java2html_task.dir}/java2html.jar" />
+    <java2html srcdir="${src_main.dir}" destdir="${browsable-source.dir}" includes="**/*.java"
+    outputFormat="html" tabs="4" style="eclipse" showLineNumbers="true" showFileName="true"
+    showTableBorder="true" includeDocumentHeader="true" includeDocumentFooter="true"
+    addLineAnchors="true" lineAnchorPrefix="fff" horizontalAlignment="center" />
+  </target>
+  <!-- =================================================================== -->
+  <!-- Checkstyle: Generating a report of code conventions violations      -->
+  <!-- =================================================================== -->
+  <target name="checkstyle" description="Generates a report of code convention violations.">
+    <mkdir dir="${checkstyle_report.dir}" />
+    <taskdef resource="checkstyletask.properties"
+    classpath="${checkstyle_task.dir}/checkstyle-all-4.2.jar" />
+    <checkstyle config="${checkstyle_task.dir}/sun_checks.xml" failureProperty="checkstyle.failure"
+    failOnViolation="false">
+      <formatter type="xml" tofile="${checkstyle_report.dir}/checkstyle_report.xml" />
+      <fileset dir="${src_main.dir}" includes="**/*.java" />
+    </checkstyle>
+    <style in="${checkstyle_report.dir}/checkstyle_report.xml"
+    out="${checkstyle_report.dir}/checkstyle_report.html"
+    style="${checkstyle_task.dir}/contrib/checkstyle-noframes-sorted.xsl" />
+  </target>
+  <!-- =================================================================== -->
+  <!-- Zip targets                                                         -->
+  <!-- =================================================================== -->
+  <!-- Creating the directory for the latest distribution -->
+  <target name="prepare_dist" depends="init">
+    <mkdir dir="${dist.dir}/${now}" />
+  </target>
+  <target name="dist" depends="prepare_dist, compile"
+  description="Builds the archive file containing all stuff">
+    <zip destfile="${dist.dir}/${project.name}-${authors}-${now}.zip" basedir="."
+    includes="src/**, lib/**, logging.properties, build.xml, build.properties"></zip>
+  </target>
+  <!-- =================================================================== -->
+  <!-- make-all: Generates all reports, docs and binaries                                  -->
+  <!-- =================================================================== -->
+  <target name="make-all" depends="splash"
+  description="Generates all reports, compiles the project and creates a dist.">
+    <antcall target="clean-all" />
+    <antcall target="compile" />
+    <antcall target="java2html" />
+    <antcall target="javadoc" />
+    <antcall target="checkstyle" />
+    <antcall target="doccheck" />
+    <antcall target="test" />
+    <antcall target="testreport" />
+    <antcall target="coverage-report" />
+    <antcall target="dist" />
+  </target>
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target name="clean" description="Removes generated class files">
+    <!-- Delete the ${build.dir} directory tree -->
+    <delete dir="${build.dir}" />
+    <delete>
+      <fileset dir="${src.dir}" includes="**/*.class" />
+    </delete>
+  </target>
+  <target name="clean-javadoc" description="Removes generated Javadoc files">
+    <delete dir="${javadoc.dir}" />
+  </target>
+  <target name="clean-java2html" description="Removes generated java-html files.">
+    <delete dir="${browsable-source.dir}}" />
+  </target>
+  <target name="clean-doc" description="Remove all the generated doc.">
+    <delete dir="${doc.dir}" />
+  </target>
+  <target name="clean-reports" description="Removes all the generated reports.">
+    <delete dir="${reports.dir}" />
+  </target>
+  <target name="clean-all" depends="clean, clean-doc, clean-reports"
+  description="Removes all generated artifacts"></target>
+  <!-- =================================================================== -->
+  <!-- Misc targets                                                       -->
+  <!-- =================================================================== -->
+  <target name="changetimeoffiles">
+    <touch datetime="01/01/2006 0:01 am">
+      <fileset dir="${deploysrc}" />
+      <fileset dir="${deploybin}" />
+    </touch>
+  </target>
+  <target name="settimeoffilestonow">
+    <touch>
+      <fileset dir="${deploysrc}" />
+      <fileset dir="${deploybin}" />
+    </touch>
+  </target>
+  <!-- =================================================================== -->
+  <!-- Documentation: Generating a LaTeX document of the source code       -->
+  <!-- =================================================================== -->
+  <target name="src2ltx" description="Generate LaTeX formatted source-code">
+    <mkdir dir="${doc.dir}" />
+    <antcall target="-add-header-to-lxt">
+      <param name="ltx.file" value="${tmp.srclisting.cover.file}" />
+    </antcall>
+    <property name="dirs" refid="j2l.include.path" />
+    <delete file="${tmp.srclisting.file}" />
+    <foreach target="-recurse-packet" param="actual.dir" list="${dirs}"
+    delimiter="${path.separator}">
+      <param name="ltx.file" value="${tmp.srclisting.file}" />
+      <!-- <param name="j2l.base.path" value="${basedir}/${src_main.dir}" />-->
+    </foreach>
+    <antcall target="-add-footer-to-lxt">
+      <param name="ltx.file" value="${tmp.srclisting.cover.file}" />
+    </antcall>
+    <antcall target="doLaTeX">
+      <param name="ltx.file" value="${tmp.srclisting.cover.file}" />
+      <param name="ltx.output" value="${doc.dir}" />
+    </antcall>
+  </target>
+  <target name="-recurse-packet">
+    <echo file="${tmp.conversion.file}" encoding="UTF-8">${actual.dir}</echo>
+    <loadfile property="section.name" srcfile="${tmp.conversion.file}">
+      <filterchain>
+        <replacestring from="${j2l.base.path}/" to="" />
+        <replacestring from="/" to="." />
+      </filterchain>
+    </loadfile>
+    <echo file="${ltx.file}" append="true" encoding="UTF-8">\section{Package
+    ${section.name}}</echo>
+    <foreach target="-add-item-to-ltx" param="src.file">
+      <fileset dir="${actual.dir}">
+        <include name="*.java" />
+      </fileset>
+      <param name="ltx.file" value="${tmp.srclisting.file}" />
+      <!--<param name="j2l.base.path" value="${basedir}/${src_main.dir}" />-->
+    </foreach>
+  </target>
+  <target name="-add-header-to-lxt">
+    <echo file="${ltx.file}" encoding="UTF-8">\documentclass[francais,a4paper]{article}
+    \usepackage{${s2l.style}}</echo>
+    <echo file="${ltx.file}" append="true" encoding="UTF-8">
+    \newcommand{\compilationpath}{${compilationpath}}
+    \newcommand{\headerimagepath}{${j2l.logos.path}}
+    \renewcommand{\projectname}{${ant.project.name}} \begin{document} % Header of the exercise:
+    \exheader \tableofcontents \newpage % Content of the exercise, topics
+    \input{${tmp.srclisting.file}}</echo>
+  </target>
+  <target name="-add-item-to-ltx">
+    <echo file="${tmp.conversion.file}" encoding="UTF-8">${src.file}</echo>
+    <loadfile property="subsection.name" srcfile="${tmp.conversion.file}">
+      <filterchain>
+        <replacestring from="${j2l.base.path}/" to="" />
+        <replacestring from="/" to="." />
+        <replacestring from=".java" to="" />
+      </filterchain>
+    </loadfile>
+    <echo file="${ltx.file}" append="true" encoding="UTF-8">\subsection{${subsection.name}}
+    \lstinputlisting{${src.file}}</echo>
+  </target>
+  <target name="-add-footer-to-lxt">
+    <echo file="${ltx.file}" append="true" encoding="UTF-8">\end{document}</echo>
+  </target>
+  <!-- =================================================================== -->
+  <!-- compiles the created *.tex file                                      -->
+  <!-- =================================================================== -->
+  <target name="doLaTeX">
+    <latex latexfile="${ltx.file}" verbose="on" clean="${ltx.doTEXCLEAN}" pdftex="${ltx.doPDF}"
+    outputDir="${ltx.output}" reRunPattern="${ltx.reRunPattern}" workingDir="./">
+      <bibtex workingDir="./" terse="${ltx2.bib.terse}" minCrossrefs="${ltx2.bib.minCrossrefs}"
+      run="on" inloop="on">
+        <fileset dir="${ltx.output}">
+          <include name="*.aux" />
+        </fileset>
+      </bibtex>
+    </latex>
+  </target>
+  <target name="doBibTex"></target>
+</project>
