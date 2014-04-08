@@ -43,7 +43,7 @@ public class ClockTimer extends Observable implements Runnable {
         calendar = new GregorianCalendar();
     }
 */
-      //TODO  haha
+    
     public ClockTimer() {
 	// TODO Remove the analog clock argument from the constructor, once the observer pattern is used.	
         calendar = new GregorianCalendar();
