@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import clock.analog.AnalogClock;
+import java.util.Observable;
 import java.util.logging.*;
 
 /**
@@ -13,7 +14,7 @@ import java.util.logging.*;
  * 
  * @author Andreas Ruppen
  */
-public class ClockTimer implements Runnable {
+public class ClockTimer extends Observable implements Runnable {
     private long time;
     
     private Calendar calendar;
